@@ -508,16 +508,7 @@ function Server:new()
 				.. "&locale=en_US"
 
 			-- cross-platform solution to open the web app
-			local os_info = io.get_system_info()
-			if os_info.os == "linux" then
-				os.execute("xdg-open '" .. url .. "'")
-			elseif os_info.os == "macos" then
-				os.execute("open '" .. url .. "'")
-			elseif os_info.os == "windows" then
-				os.execute(string.format('start "" "%s"', url))
-			else
-				notify.error("Unsupported operating system")
-			end
+			vim.ui.open(url)
 		end)
 	end
 
