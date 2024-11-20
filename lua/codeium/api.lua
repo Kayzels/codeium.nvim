@@ -54,6 +54,7 @@ end
 --- @field healthy boolean
 --- @field last_heartbeat? number
 --- @field last_heartbeat_error? string
+--- @field enabled boolean
 --- @field pending_request table
 local Server = {
 	port = nil,
@@ -63,6 +64,7 @@ local Server = {
 	healthy = false,
 	last_heartbeat = nil,
 	last_heartbeat_error = nil,
+	enabled = true,
 	pending_request = { 0, noop },
 }
 
@@ -539,6 +541,22 @@ function Server:shutdown()
 	end
 end
 
+function Server:enable()
+	self.enabled = true
+	notify.info("Codeium enabled")
+end
+
+function Server:disable()
+	self.enabled = false
+	notify.info("Codeium disabled")
+end
+
+function Server:toggle()
+	if self.enabled then
+		self:disable()
+	else
+		self:enable()
+	end
 end
 
 return Server
