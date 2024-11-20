@@ -235,7 +235,7 @@ function M.get_system_info()
 	return system_info_cache
 end
 
----@return plenary.Job
+---@return Job
 function M.job(cmd)
 	local o = config.options
 	local tool_name = cmd[1]

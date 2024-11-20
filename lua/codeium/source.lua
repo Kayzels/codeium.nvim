@@ -72,11 +72,14 @@ local function codeium_to_cmp(comp, offset, right)
 	}
 end
 
+---@class Source
+---@field server? Server
 local Source = {
 	server = nil,
 }
 Source.__index = Source
 
+---@param server Server
 function Source:new(server)
 	local o = {}
 	setmetatable(o, self)
@@ -86,7 +89,7 @@ function Source:new(server)
 end
 
 function Source:is_available()
-	return self.server.is_healthy()
+	return self.server:is_healthy()
 end
 
 function Source:get_position_encoding_kind()
@@ -106,7 +109,7 @@ if imported_cmp then
 			and event.entry.source.source
 			and event.entry.source.source.server
 		then
-			event.entry.source.source.server.accept_completion(event.entry.completion_item.codeium_completion_id)
+			event.entry.source.source.server:accept_completion(event.entry.completion_item.codeium_completion_id)
 		end
 	end)
 end
@@ -157,7 +160,7 @@ function Source:complete(params, callback)
 
 	local other_documents = util.get_other_documents(bufnr)
 
-	self.server.request_completion(
+	self.server:request_completion(
 		{
 			text = text,
 			editor_language = filetype,
