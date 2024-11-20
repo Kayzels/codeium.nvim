@@ -64,4 +64,8 @@ function M.disable()
 	M.s:disable()
 end
 
+function M.is_enabled()
+	return M.s.enabled
+end
+
 return M
